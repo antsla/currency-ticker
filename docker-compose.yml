@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  ticker:
+    build:
+      dockerfile: .docker/app.Dockerfile
+      context: ./
+      args:
+        SERVICE_NAME: ticker
+    volumes:
+      - ./ticker:/app/ticker:delegated
+      - ./.docker/entrypoint.sh:/entrypoint.sh:ro
+    entrypoint: /entrypoint.sh
+    networks:
+      - currency-ticker
+
+volumes:
+  data:
+
+networks:
+  currency-ticker:
